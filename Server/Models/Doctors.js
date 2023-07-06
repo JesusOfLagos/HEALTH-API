@@ -1,4 +1,5 @@
 const Mongoose = require("mongoose");
+const UserSchema = require("./Users");
 const Schema = Mongoose.Schema
 
 const DoctorSchema = new Schema({
@@ -19,43 +20,80 @@ const DoctorSchema = new Schema({
     },
 
     qualifications: {
-        type: [],
+        type: [
+            {
+                type: String,
+            }
+        ],
         required: true
+    },
+
+    education: {
+        type: [
+       {
+        school: String,
+        degree: String,
+       }
+     ]
     },
 
     location: {
-        type: String,
-        required: true
+       type: String,
+       required: true
     },
 
     speciality: {
-        type: String,
-        required: true
+        type: [ 
+            {
+              type: String,
+              required: true
+            }
+        ]      
     },
 
     rating: {
         type: Number,
-        required: false
+        default: 0
     },
 
     reviews: {
-        type: [],
-        required: false
+        type: [
+            {
+                author: String,
+                rating: Number,
+                review: String
+            }
+        ]
     },
 
     availability: {
-        type: String,
+        type: [
+            {
+                type: Date()
+            }
+        ],
         required: false
+    },
+
+    isAvailable: {
+        type: Boolean,
+        default: true
     },
 
     insuranceAccepted: {
-        type: [],
-        required: false
+        type: [
+            {
+                type: String,
+            }
+        ],
+        default: {
+            type: "No Insurance!"
+        }
     },
 
     experience: {
-        type: String,
-        required: true
+        type: Number,
+        default: 0
     },
 
     gender: {
@@ -74,13 +112,21 @@ const DoctorSchema = new Schema({
     },
 
     affiliation: {
-        type: String,
-        required: false
+        type: [
+            {
+                type: String
+            }
+        ],
+        default: "No affiliation at this moment"
     },
 
     languageSpoken: {
-        type: [],
-        required: true
+        type: [
+            {
+                type: String
+            }
+        ],
+        default: "No language input yet!"
     },
 
     image: {
@@ -97,3 +143,4 @@ const DoctorSchema = new Schema({
 
 
 
+module.exports = DoctorSchema;
