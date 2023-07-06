@@ -97,3 +97,4 @@ const DoctorSchema = new Schema({
 
 
 
+module.exports = DoctorSchema;

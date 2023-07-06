@@ -64,6 +64,8 @@ const UserSchema = new Schema({
     }
 })
 
+module.exports = UserSchema;
+
 
 
 
