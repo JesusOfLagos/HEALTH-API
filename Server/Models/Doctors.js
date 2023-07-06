@@ -16,5 +16,15 @@ const DoctorSchema = new Schema({
         type: String,
         required: true,
         unique: true
+    },
+
+    qualifications: {
+        type: [],
+        required: true
+    },
+
+    verified: {
+        type: Boolean,
+        required: false
     }
 })
