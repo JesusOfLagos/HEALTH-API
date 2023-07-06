@@ -23,11 +23,6 @@ const UserSchema = new Schema({
         required: true
     },
 
-    availability: {
-        type: String,
-        required: false
-    },
-
     insurance: {
         type: String,
         required: false
@@ -49,12 +44,26 @@ const UserSchema = new Schema({
     },
 
     languageSpoken: {
-        type: [],
-        required: true
+        type: [
+            {
+                type: String
+            }
+        ],
+        default: "No language yet!"
     },
 
     image: {
         type: String,
+        required: false
+    },
+
+    complaints: {
+        type: [
+            {
+                 type: String,
+                 resolved: Boolean
+            },
+         ],
         required: false
     },
 
