@@ -11,5 +11,12 @@ const ComplaintsSchema = new Schema({
     urgency: {
         type: String,
         required: true
+    },
+
+    isSolved: {
+        type: Boolean,
+        default: false
     }
 })
+
+module.exports = ComplaintsSchema;
