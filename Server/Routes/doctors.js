@@ -20,12 +20,12 @@ const JWT = require("jsonwebtoken")
 
 
 
-router.post("users/auth", (req, res) => {
+router.post("doctors/auth", (req, res) => {
 
 })
 
 
 
-router.post("users/auth/login", (req, res) => {
+router.post("doctors/auth/login", (req, res) => {
 
 })
