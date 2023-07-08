@@ -110,8 +110,8 @@ router.post('/users/auth', async (req, res) => {
     if (!isValid) {
         res.json({success: false, errors});
     } else {
-        const {firstName, lastName, email, password} = req.body;
-        const registerUser = new Users({
+        const {firstName, lastName, email, password, qualifications, education, location, speciality, availabilty, experience, gender, age, contact, affiliation, languageSpoken, image} = req.body;
+        const newDoctor = new Doctors({
             firstName, 
             lastName,
             email,
