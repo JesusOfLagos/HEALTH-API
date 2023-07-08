@@ -6,29 +6,13 @@ const mongoose = require("mongoose")
 
 const JWT = require("jsonwebtoken")
 
+const { LoginValidator, RegisterValidator } = require("../Validators/validators");
 
+const Doctors = require("../Models/Doctors")
 
+const Users = require("../Models/Users")
 
-
-
-
-
-
-
-
-
-
-
-
-router.post("doctors/auth", (req, res) => {
-
-})
-
-
-
-router.post("doctors/auth/login", (req, res) => {
-
-})
+const Complaints = require("../Models/Complaints")
 
 
 
@@ -44,24 +28,15 @@ router.post("doctors/auth/login", (req, res) => {
 
 
 
+// router.post("doctors/auth", (req, res) => {
+
+// })
 
 
 
+// router.post("doctors/auth/login", (req, res) => {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// }
 
 
 
@@ -76,7 +51,7 @@ router.post("doctors/auth/login", (req, res) => {
 // const checkAuth = require("../MiddleWare/check-auth");
 // const env = require("dotenv").config();
 
-// const { LoginValidator, RegisterValidator } = require("../Validators/validators");
+
 // const Quizzes = require("../Models/Quizzes");
 
 // const router = express.Router();
@@ -88,76 +63,76 @@ router.post("doctors/auth/login", (req, res) => {
 
 // // Login A User
 
-// router.post('/users/auth/login', async (req, res) => {
-//     const {errors, isValid} = LoginValidator(req.body);
-//     if (!isValid) {
-//         res.json({success: false, errors});
-//     } else {
-//         Users.findOne({email: req.body.email}).then(user => {
-//             if (!user) {
-//                 res.json({message: "Email not found", success: false})
-//             } else {
-//                 bcrypt.compare(req.body.password, user.password).then(success => {
-//                     if (!success) {
-//                         res.json({message: "Invalid Password", success: false})
-//                     } else {
-//                         const payload = {
-//                             id: user._id,
-//                             name: user.firstName
-//                         }
-//                         jwt.sign(
-//                             payload,
-//                             process.env.APP_SECRET, {expiresIn: 2155926},
-//                             (err, token) => {
-//                                 res.json({
-//                                     user,
-//                                     token: `Bearer Token: ` + token,
-//                                     success: true
-//                                 })
-//                             }
-//                         )
-//                     }
-//                 })
-//             }
-//         })
-//     }
-// })
+router.post('/users/auth/login', async (req, res) => {
+    const {errors, isValid} = LoginValidator(req.body);
+    if (!isValid) {
+        res.json({success: false, errors});
+    } else {
+        Users.findOne({email: req.body.email}).then(user => {
+            if (!user) {
+                res.json({message: "Email not found", success: false})
+            } else {
+                bcrypt.compare(req.body.password, user.password).then(success => {
+                    if (!success) {
+                        res.json({message: "Invalid Password", success: false})
+                    } else {
+                        const payload = {
+                            id: user._id,
+                            name: user.firstName
+                        }
+                        jwt.sign(
+                            payload,
+                            process.env.APP_SECRET, {expiresIn: 2155926},
+                            (err, token) => {
+                                res.json({
+                                    user,
+                                    token: `Bearer Token: ` + token,
+                                    success: true
+                                })
+                            }
+                        )
+                    }
+                })
+            }
+        })
+    }
+})
 
 
 
 
-// // Create A User 
+// Create A User 
 
 
-// router.post('/users/auth', async (req, res) => {
-//     console.log(req.body)
-//     const {errors, isValid} = RegisterValidator(req.body);
-//     if (!isValid) {
-//         res.json({success: false, errors});
-//     } else {
-//         const {firstName, lastName, email, password} = req.body;
-//         const registerUser = new Users({
-//             firstName, 
-//             lastName,
-//             email,
-//             password,
-//             createdAt: new Date()
-//         });
-//         await bcrypt.genSalt(10, (err, salt) => {
-//             bcrypt.hash(password, salt, (hashErr, hash) => {
-//                 if (err || hashErr) {
-//                     res.json({"message": "Error Ocurred While Hashing", success: false});
-//                     return;
-//                 }
+router.post('/users/auth', async (req, res) => {
+    console.log(req.body)
+    const {errors, isValid} = RegisterValidator(req.body);
+    if (!isValid) {
+        res.json({success: false, errors});
+    } else {
+        const {firstName, lastName, email, password} = req.body;
+        const registerUser = new Users({
+            firstName, 
+            lastName,
+            email,
+            password,
+            createdAt: new Date()
+        });
+        await bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(password, salt, (hashErr, hash) => {
+                if (err || hashErr) {
+                    res.json({"message": "Error Ocurred While Hashing", success: false});
+                    return;
+                }
 
-//                 registerUser.password = hash;
-//                 registerUser.save().then(() => {
-//                     res.json({message: "User Created Successfully", "success": true});
-//                 })
-//             })
-//         })
-//     }
-// })
+                registerUser.password = hash;
+                registerUser.save().then(() => {
+                    res.json({message: "User Created Successfully", "success": true});
+                })
+            })
+        })
+    }
+})
 
 
 
