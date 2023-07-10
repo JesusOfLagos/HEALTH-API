@@ -51,17 +51,17 @@ module.exports.RegisterValidator = (data) => {
     let passwordError = validator.isEmpty(data.password) ? "Passord is required": "";
     let firstNameError = validator.isEmpty(data.firstName) ? "First Name is required": "";
     let lastNameError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
-    let qualificationsError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
-    let educationError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
-    let locationError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
-    let specialityError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
-    let experienceError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
-    let availabilityError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
-    let genderError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
-    let ageError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
-    let contactError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
-    let affiliationError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
-    let languageSpokenError = validator.isEmpty(data.lastName) ? "Last Name is required": "";
+    let qualificationsError = validator.isEmpty(data.qualifications) ? "Last Name is required": "";
+    let educationError = validator.isEmpty(data.education) ? "Last Name is required": "";
+    let locationError = validator.isEmpty(data.location) ? "Last Name is required": "";
+    let specialityError = validator.isEmpty(data.speciality) ? "Last Name is required": "";
+    let experienceError = validator.isEmpty(data.experience) ? "Last Name is required": "";
+    let availabilityError = validator.isEmpty(data.availability) ? "Last Name is required": "";
+    let genderError = validator.isEmpty(data.gender) ? "Last Name is required": "";
+    let ageError = validator.isEmpty(data.age) ? "Last Name is required": "";
+    let contactError = validator.isEmpty(data.contact) ? "Last Name is required": "";
+    let affiliationError = validator.isEmpty(data.affiliation) ? "Last Name is required": "";
+    let languageSpokenError = validator.isEmpty(data.languageSpoken) ? "Last Name is required": "";
     let imageError = validator.isEmpty(data.image) ? "Last Name is required": "";
 
 
@@ -70,14 +70,14 @@ module.exports.RegisterValidator = (data) => {
     if (firstNameError || lastNameError) errors.firstName = "Full name is required";
     if (qualificationsError) errors.qualifications = qualificationsError;
     if (educationError) errors.education = educationError;
-    if (locationError) errors.password = locationError;
-    if (specialityError) errors.password = specialityError;
-    if (experienceError) errors.password = experienceError;
-    if (availabilityError) errors.password = availabilityError;
-    if (genderError) errors.password = genderError;
-    if (ageError) errors.password = ageError;
-    if (contactError) errors.password = contactError;
-    if (affiliationError) errors.password = affiliationError;
+    if (locationError) errors.location = locationError;
+    if (specialityError) errors.speciality = specialityError;
+    if (experienceError) errors.experience = experienceError;
+    if (availabilityError) errors.availability = availabilityError;
+    if (genderError) errors.gender = genderError;
+    if (ageError) errors.age = ageError;
+    if (contactError) errors.contact = contactError;
+    if (affiliationError) errors.affiliation = affiliationError;
     if (languageSpokenError) errors.languageSpoken= languageSpokenError;
     if (imageError) errors.image = imageError;
 
