@@ -68,18 +68,18 @@ module.exports.RegisterValidator = (data) => {
     if (emailError) errors.email = emailError;
     if (passwordError) errors.password = passwordError;
     if (firstNameError || lastNameError) errors.firstName = "Full name is required";
-    if (qualificationsError) errors.password = passwordError;
-    if (educationError) errors.password = passwordError;
-    if (locationError) errors.password = passwordError;
-    if (specialityError) errors.password = passwordError;
-    if (experienceError) errors.password = passwordError;
-    if (availabilityError) errors.password = passwordError;
-    if (genderError) errors.password = passwordError;
-    if (ageError) errors.password = passwordError;
-    if (contactError) errors.password = passwordError;
-    if (affiliationError) errors.password = passwordError;
-    if (languageSpokenError) errors.password = passwordError;
-    if (imageError) errors.password = passwordError;
+    if (qualificationsError) errors.qualifications = qualificationsError;
+    if (educationError) errors.education = educationError;
+    if (locationError) errors.password = locationError;
+    if (specialityError) errors.password = specialityError;
+    if (experienceError) errors.password = experienceError;
+    if (availabilityError) errors.password = availabilityError;
+    if (genderError) errors.password = genderError;
+    if (ageError) errors.password = ageError;
+    if (contactError) errors.password = contactError;
+    if (affiliationError) errors.password = affiliationError;
+    if (languageSpokenError) errors.languageSpoken= languageSpokenError;
+    if (imageError) errors.image = imageError;
 
 
     return{
