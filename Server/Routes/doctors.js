@@ -10,51 +10,11 @@ const { LoginValidator, RegisterValidator } = require("../Validators/validators"
 
 const Doctors = require("../Models/Doctors")
 
+const bcrypt = require("bcrypt")
+
 const Users = require("../Models/Users")
 
 const Complaints = require("../Models/Complaints")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// router.post("doctors/auth", (req, res) => {
-
-// })
-
-
-
-// router.post("doctors/auth/login", (req, res) => {
-
-// }
-
-
-
-
-
-// const express = require("express");
-// const Users = require("../Models/Users");
-// const Quiz = require("../Models/Quizzes")
-// const Questions = require("../Models/Questions")
-// const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
-// const checkAuth = require("../MiddleWare/check-auth");
-// const env = require("dotenv").config();
-
-
-// const Quizzes = require("../Models/Quizzes");
-
-// const router = express.Router();
 
 
 
@@ -174,7 +134,7 @@ router.delete('doctors/delete/:id', async (req, res) => {
 // Delete A Doctor By Email
 
 router.delete('doctors/delete', async (req, res) => {
-    await Doctors.findOneAndDelete({email: })
+    await Doctors.findOneAndDelete({email: req.body.email}).then()
 })
 
 

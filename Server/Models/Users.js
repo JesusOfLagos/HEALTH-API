@@ -67,6 +67,17 @@ const UserSchema = new Schema({
         required: false
     },
 
+    doctors: {
+        type: [
+            {
+                type: String,
+                by: String
+            }
+        ],
+        default: [{type: "Doctor-1", by: "Jesus"}, {type: "Doctor-1", by: "Jesus"}],
+        required: false
+    },
+
     verified: {
         type: Boolean,
         required: false
