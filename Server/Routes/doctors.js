@@ -116,6 +116,17 @@ router.post('/users/auth', async (req, res) => {
             lastName,
             email,
             password,
+            qualifications,
+            education,
+            location,
+            speciality,
+            availabilty,
+            experience,
+            gender,
+            age,
+            contact,
+            languageSpoken,
+            affiliation,
             createdAt: new Date()
         });
         await bcrypt.genSalt(10, (err, salt) => {
@@ -125,9 +136,9 @@ router.post('/users/auth', async (req, res) => {
                     return;
                 }
 
-                registerUser.password = hash;
-                registerUser.save().then(() => {
-                    res.json({message: "User Created Successfully", "success": true});
+                newDoctor.password = hash;
+                newDoctor.save().then(() => {
+                    res.json({message: "Doctor Created Successfully", "success": true});
                 })
             })
         })
