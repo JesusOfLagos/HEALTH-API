@@ -148,28 +148,34 @@ router.post('/users/auth', async (req, res) => {
 
 
 
-// // Get A User By Id
+// Get A Doctor By Id
 
-// router.get('users/find/:id', async (req, res) => {
-//     await Users.findOne({_id: req.params.id}).then(user => {
-//         res.json({user, success: true}).catch(er => {
-//             res.json({success: false, message: er.message})
-//         })
-//     })
-// })
-
-
+router.get('doctors/find/:id', async (req, res) => {
+    await Doctors.findOne({_id: req.params.id}).then(doctor => {
+        res.json({doctor, success: true}).catch(er => {
+            res.json({success: false, message: er.message})
+        })
+    })
+})
 
 
-// // Delete A User
-// router.delete('users/delete/:id', async (req, res) => {
-//     await Users.findOneAndDelete({_id: req.params.id}).then(user => {
-//         res.json({message: "User deleted successfully", success: true}).catch(er => {
-//             res.json({success: false, message: "Can't Delete User"})
-//         })
-//     })
-// })
 
+
+// Delete A Doctor
+router.delete('doctors/delete/:id', async (req, res) => {
+    await Doctors.findOneAndDelete({_id: req.params.id}).then(doctor => {
+        res.json({message: "Doctor deleted successfully", success: true}).catch(er => {
+            res.json({success: false, message: "Can't Delete Doctor"})
+        })
+    })
+})
+
+
+// Delete A Doctor By Email
+
+router.delete('doctors/delete', async (req, res) => {
+    await Doctors.findOneAndDelete({email: })
+})
 
 
 
