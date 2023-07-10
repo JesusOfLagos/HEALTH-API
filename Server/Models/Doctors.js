@@ -131,6 +131,8 @@ const DoctorSchema = new Schema({
 
     image: {
         type: String,
+        publicId: "",
+        secureUrl: "https://res.cloudinary.com/dacp0ugig/image/upload/v1682420313/cld-sample.jpg",
         required: false
     },
 
