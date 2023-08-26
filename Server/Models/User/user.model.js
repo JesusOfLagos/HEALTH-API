@@ -1,80 +1,20 @@
-const Mongoose = require("mongoose");
-const Schema = Mongoose.Schema
 
-const UserSchema = new Schema({
-    firstName: {
-        type: String,
-        required: true
-    },
+const mongoose = require('mongoose');
 
-    lastName: {
-        type: String,
-        required: true
-    },
+const userSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  username: { type: String, required: true },
+  password: { type: String, required: true },
+  wallet: { type: mongoose.Schema.Types.ObjectId, ref: 'Wallet', required: true },
+  refreshTokens: { type: [], required: false },
+  resetToken: { type: String, required: false },
+  verificationToken: { type: String, required: false },
+  resetTokenExpiration: { type: Date, required: false },
+  profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile', required: true },
+  isEmailVerified: { type: Boolean, default: false },
+  isPhoneVerified: { type: Boolean, default: false },
+  isSubscribed: { type: Boolean, default: false },
+  subscriptions: { type: [], default: []}
+});
 
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-
-    location: {
-        type: String,
-        required: true
-    },
-
-    insurance: {
-        type: String,
-        required: false
-    },
-
-    gender: {
-        type: String,
-        required: true
-    },
-
-    age: {
-        type: Number,
-        required: true
-    },
-
-    contact: {
-        type: String,
-        required: true
-    },
-
-    languageSpoken: {
-        type: [
-            {
-                type: String
-            }
-        ],
-        default: "No language yet!"
-    },
-
-    image: {
-        type: String,
-        required: false
-    },
-
-    complaints: {
-        type: [
-            {
-                 type: String,
-                 resolved: Boolean
-            },
-         ],
-        required: false
-    },
-
-    verified: {
-        type: Boolean,
-        required: false
-    }
-})
-
-module.exports = UserSchema;
-
-
-
-
+module.exports = mongoose.model('User', userSchema);
