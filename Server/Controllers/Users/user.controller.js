@@ -4,10 +4,9 @@ import User from "../../Models/User/user.model"
 import cloudinary from "../../Services/Storage/cloudinary"
 import RegisterValidator from "../../Validators/User/user.register.validator"
 import LoginValidator from "../../Validators/User/user.login.validator"
-import { ObjectId } from "mongoose"
+import ObjectId from "mongoose"
 import CreateWallet from "../Payment/Finance/wallet.controller"
 import { generateRandomUsername } from "../../Auth/token.auth"
-
 
 
 
