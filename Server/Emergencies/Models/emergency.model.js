@@ -10,7 +10,7 @@ const Emergency = new mongoose.Schema({
 })
 
 
-module.exports = Emergency
+module.exports = mongoose.model("Emergency", Emergency)
 
 
 
