@@ -3,9 +3,6 @@ const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
-  firstname: { type: String, required: true },
-  lastname: { type: String, required: true },
-  phonenumber: { type: String, required: true },
   gender: { type: String, enum: ['male', 'female', 'other'], required: true },
   address: { type: String, required: true },
   height: { type: Number, required: true },

@@ -1,5 +1,6 @@
 import Wallet from "../../../Models/Payment/Finance/wallet.model"
 
+
 export default async function CreateWallet (userId) {
     try {
         const newWallet = new Wallet({
@@ -13,10 +14,3 @@ export default async function CreateWallet (userId) {
 }
 
 
-export default async function FundWallet (walletId) {
-    try {
-        
-    } catch (error) {
-        
-    }                                                                                                                                                                                                                     
-}

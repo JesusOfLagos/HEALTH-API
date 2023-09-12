@@ -8,7 +8,8 @@
  const bodyparser = require("body-parser");
  const passport = require("passport");
  const bcrypt = require("bcrypt");
- const userRoutes = require("./Routes/users")
+ const UserRoutes = require("./Routes/User/users.route");
+ const DoctorRoutes = require("./Routes/Doctor/doctor.route");
 
  const env = require('dotenv').config();
 
@@ -24,12 +25,11 @@
 
 
  // routes
- const UserRoutes = require("./Routes/User/users.route");
- const DoctorRoutes = require("./Routes/Doctor/doctor.route");
+
 
  // Use Routes
- app.use("/", UserRoutes);
- app.use('/', DoctorRoutes)
+ app.use("/users/auth", UserRoutes);
+ app.use('/doctors/auth', DoctorRoutes)
 
  //port
 

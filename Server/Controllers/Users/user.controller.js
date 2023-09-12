@@ -11,7 +11,7 @@ import { generateRandomUsername } from "../../Auth/token.auth"
 
 
 
-export const RegisterUser = async (req, res) => {
+export async function RegisterUser (req, res) {
     try {
         const defaultProfile = new ObjectId
         const { email, password } = req.body
@@ -20,26 +20,31 @@ export const RegisterUser = async (req, res) => {
         email,
         password,
         username: new generateRandomUsername(),
-        wallet: newWallet,
+        wallet: defaultProfile,
         profile: defaultProfile
        }) 
 
        const newWallet  = CreateWallet(userId)
-
+       user.wallet = newWallet
        await newUser.save()
-
        res.json({
         message: "User Created Successfully.",
         user: newUser._id
        })
     } catch (error) {
         res.json({
-            message: "Error Creating User."
+            message: "Error Creating User.",
+            error
         })
     }
 }
 
-export const LoginUser = async (req, res) => {
+
+
+
+
+
+export async function LoginUser (req, res) {
     try {
         const { email, password } = req.body
         await LoginValidator(req.body)
@@ -52,26 +57,10 @@ export const LoginUser = async (req, res) => {
     }
 }
 
-export const LogoutUser = async () => {
+
+export async function LogoutUser (req, res) {
     try {
-        
-    } catch (error) {
-        
-    }
-}
-
-
-export const RenewToken = async () => {
-    try {
-        
-    } catch (error) {
-        
-    }
-}
-
-
-export const DeleteAccount = async () => {
-    try {
+        const userId = req.user._id
         
     } catch (error) {
         
