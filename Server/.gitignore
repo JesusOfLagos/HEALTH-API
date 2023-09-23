@@ -2,8 +2,8 @@
 
 /node_modules
 
-/AI-ML
+# /AI-ML
 
-/Third-Party
+# /Third-Party
 
-/Auth
+# /Auth
