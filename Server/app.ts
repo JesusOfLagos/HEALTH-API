@@ -8,9 +8,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import path from "path";
 import GlobalRouter from "./Routes/index.route";
-
-
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+dotenv.config();
 
 // app
 const app: Application = express();
@@ -29,6 +27,7 @@ app.use((req: any, res: any) => {
 
 //port
 const port = process.env.PORT || 8090;
+console.log(process.env.MONGO_URI as string);
 
 //db
 
