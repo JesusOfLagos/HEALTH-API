@@ -24,4 +24,6 @@ const cardSchema: Schema = new Schema({
     dateUpdated: { type: Date, default: Date.now },
 })
 
-export default mongoose.model<ICard>('Card', cardSchema);
+const Card = mongoose.model<ICard>('Card', cardSchema);
+
+export default Card;
