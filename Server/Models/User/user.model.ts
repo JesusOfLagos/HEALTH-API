@@ -37,73 +37,31 @@ export interface IUser extends Document {
 }
 
 
-
-
-
-
-// const userSchema: Schema = new Schema <IUser>({
-//   email: { type: String, required: true, unique: true },
-//   username: { type: String, required: true },
-//   accountNumber: { type: String, required: false, unique: true },
-//   customerId: { type: String, required: false, unique: true },
-//   accountName: { type: String, required: false },
-//   bankName: { type: String, required: false },
-//   password: { type: String, required: true },
-//   wallet: { type: mongoose.Schema.Types.ObjectId, ref: 'Wallet', required: true },
-//   refreshTokens: { type: [], required: false },
-//   resetToken: { type: String, required: false },
-//   verificationToken: { type: String, required: false },
-//   resetTokenExpiration: { type: Date, required: false },
-//   profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile', required: true },
-//   isEmailVerified: { type: Boolean, default: false },
-//   status: { type: String, enum: ['Good', 'Critical', 'Bad', 'Excellent', 'Worse', 'Fair'], default: 'Excellent' },
-//   isPhoneVerified: { type: Boolean, default: false },
-//   isSubscribed: { type: Boolean, default: false },
-//   phoneNumber: { type: String, required: false, unique: true },
-//   tag: { type: String, required: false, unique: true },
-//   pin: { type: String, required: false },
-//   bvn: { type: String, required: false, unique: true },
-
-// })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  const userSchema: Schema = new Schema({
+  firstname: { type: String, required: true },
+  lastname: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   username: { type: String, required: true },
-  accountNumber: { type: String, required: false, unique: true },
-  customerId: { type: String, required: false, unique: true },
+  accountNumber: { type: String, required: false },
+  customerId: { type: String, required: false },
   accountName: { type: String, required: false },
   bankName: { type: String, required: false },
   password: { type: String, required: true },
-  wallet: { type: Schema.Types.ObjectId, ref: 'Wallet', required: true },
+  wallet: { type: Schema.Types.ObjectId, ref: 'Wallet', required: false },
   refreshTokens: { type: [], required: false },
   resetToken: { type: String, required: false },
   verificationToken: { type: String, required: false },
   resetTokenExpiration: { type: Date, required: false },
-  profile: { type: Schema.Types.ObjectId, ref: 'Profile', required: true },
+  profile: { type: Schema.Types.ObjectId, ref: 'Profile', required: false },
   isEmailVerified: { type: Boolean, default: false },
   status: { type: String, enum: ['Good', 'Critical', 'Bad', 'Excellent', 'Worse', 'Fair'], default: 'Excellent' },
   isPhoneVerified: { type: Boolean, default: false },
   isSubscribed: { type: Boolean, default: false },
-  phoneNumber: { type: String, required: false, unique: true },
-  tag: { type: String, required: false, unique: true },
+  phoneNumber: { type: String, required: false },
+  tag: { type: String, required: false },
   pin: { type: String, required: false },
-  bvn: { type: String, required: false, unique: true },
+  role: { type: String, enum: ['User', 'Admin', 'SuperAdmin'], default: 'User' },
+  bvn: { type: String, required: false },
   otp: { type: String, required: true},
   tier : { type: Number, default : 0 },
   isBlocked: { type: Boolean, default: false },
@@ -114,7 +72,8 @@ export interface IUser extends Document {
   accessToken: { type: String, required: false },
   loginAttempts: { type: Number, default: 0},
   lastLoginAttemptAt: { type: Date, default: Date.now()},
-  subscriptions: { type: [], default: []}
+  subscriptions: { type: [], default: []},
+  createdAt: { type: Date, default: Date.now },
 });
 
 const User = mongoose.model('User', userSchema);

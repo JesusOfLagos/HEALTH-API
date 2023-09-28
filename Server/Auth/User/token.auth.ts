@@ -1,7 +1,7 @@
-import jwt, { TokenExpiredError } from 'jsonwebtoken';
+// import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import otpGenerator from 'otp-generator';
-import { AppTokenError } from '../../Errors/Auth/token.error';
-import Blacklist from '../../Models/utils/Blacklist.model'; // Import your Blacklist model
+// import { AppTokenError } from '../../Errors/Auth/token.error';
+// import Blacklist from '../../Models/utils/Blacklist.model'; // Import your Blacklist model
 
 
 export async function generateOTP() {
@@ -17,107 +17,107 @@ export async function generateOTP() {
 }
 
 
-export async function generateAccessToken(user: any) {
-  const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as string
+// export async function generateAccessToken(user: any) {
+//   const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as string
 
-  if (!accessTokenSecret) {
-    throw new AppTokenError('ACCESS_TOKEN_SECRET is not defined in the environment.');
-  }
+//   if (!accessTokenSecret) {
+//     throw new AppTokenError('ACCESS_TOKEN_SECRET is not defined in the environment.');
+//   }
 
-  const payload = { user };
-  const token = jwt.sign(payload, accessTokenSecret, { expiresIn: '7d' });
-  return token;
-}
+//   const payload = { user };
+//   const token = jwt.sign(payload, accessTokenSecret, { expiresIn: '7d' });
+//   return token;
+// }
 
 
-export async function generateRefreshToken(user: any) {
-    const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as string
+// export async function generateRefreshToken(user: any) {
+//     const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as string
   
-    if (!refreshTokenSecret) {
-      throw new AppTokenError('REFRESH_TOKEN_SECRET is not defined in the environment.');
-    }
+//     if (!refreshTokenSecret) {
+//       throw new AppTokenError('REFRESH_TOKEN_SECRET is not defined in the environment.');
+//     }
   
-    const payload = { user };
-    const token = jwt.sign(payload, refreshTokenSecret, { expiresIn: '7d' });
-    return token;
-  }
-  
-
-
-
-export async function verifyRefreshToken(token: string) {
-  const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as string;
-
-  if (!refreshTokenSecret) {
-    throw new Error('REFRESH_TOKEN_SECRET is not defined in the environment.');
-  }
-
-  try {
-    const payload = jwt.verify(token, refreshTokenSecret);
-    return payload;
-  } catch (error) {
-    if (error instanceof TokenExpiredError) {
-      throw new AppTokenError('Refresh Token has expired.');
-    } else {
-      throw new AppTokenError('Invalid Refresh Token.');
-    }
-  }
-}
-
-
-export async function verifyAccessToken(token: string) {
-    const accessTokenSecret = process.env.ACCESSS_TOKEN_SECRET as string;
-  
-    if (!accessTokenSecret) {
-      throw new Error('R is not defined in the environment.');
-    }
-  
-    try {
-      const payload = jwt.verify(token, accessTokenSecret);
-      return payload;
-    } catch (error) {
-      if (error instanceof TokenExpiredError) {
-        throw new AppTokenError('Access Token has expired.');
-      } else {
-        throw new AppTokenError('Invalid Access Token.');
-      }
-    }
-  }
-
-  export async function globalVerifyAccessToken(req, res, next) {
-    const token = req.header('Authorization') as string;
-    await isTokenBlacklisted(token);
-    const payload = await verifyAccessToken(token);
-    req.user = payload
-    next();
-  }
-
-  export async function globalVerifyRefreshToken(req, res, next) {
-    const token = req.header('Authorization') as string;
-    await isTokenBlacklisted(token);
-    const payload = await verifyRefreshToken(token);
-    req.user = payload
-    next();
-  }
-
-
-
-  export async function isTokenBlacklisted(token: string) {
-    const blacklist = await Blacklist.findOne({ tokens: token });
-  
-    if (blacklist && blacklist.tokens.includes(token)) {
-      throw new AppTokenError('Token is blacklisted.');
-    }
-  }
+//     const payload = { user };
+//     const token = jwt.sign(payload, refreshTokenSecret, { expiresIn: '7d' });
+//     return token;
+//   }
   
 
 
 
-  export async function generateTokens(user: any) {
-    const accessToken = await generateAccessToken(user);
-    const refreshToken = await generateRefreshToken(user);
-    return { accessToken, refreshToken };
-  }
+// export async function verifyRefreshToken(token: string) {
+//   const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as string;
+
+//   if (!refreshTokenSecret) {
+//     throw new Error('REFRESH_TOKEN_SECRET is not defined in the environment.');
+//   }
+
+//   try {
+//     const payload = jwt.verify(token, refreshTokenSecret);
+//     return payload;
+//   } catch (error) {
+//     if (error instanceof TokenExpiredError) {
+//       throw new AppTokenError('Refresh Token has expired.');
+//     } else {
+//       throw new AppTokenError('Invalid Refresh Token.');
+//     }
+//   }
+// }
+
+
+// export async function verifyAccessToken(token: string) {
+//     const accessTokenSecret = process.env.ACCESSS_TOKEN_SECRET as string;
+  
+//     if (!accessTokenSecret) {
+//       throw new Error('R is not defined in the environment.');
+//     }
+  
+//     try {
+//       const payload = jwt.verify(token, accessTokenSecret);
+//       return payload;
+//     } catch (error) {
+//       if (error instanceof TokenExpiredError) {
+//         throw new AppTokenError('Access Token has expired.');
+//       } else {
+//         throw new AppTokenError('Invalid Access Token.');
+//       }
+//     }
+//   }
+
+//   export async function globalVerifyAccessToken() {
+//     const token = req.header('Authorization') as string;
+//     await isTokenBlacklisted(token);
+//     const payload = await verifyAccessToken(token);
+//     req.user = payload
+//     next();
+//   }
+
+//   export async function globalVerifyRefreshToken() {
+//     const token = req.header('Authorization') as string;
+//     await isTokenBlacklisted(token);
+//     const payload = await verifyRefreshToken(token);
+//     req.user = payload
+//     next();
+//   }
+
+
+
+//   export async function isTokenBlacklisted(token: string) {
+//     const blacklist = await Blacklist.findOne({ tokens: token });
+  
+//     if (blacklist && blacklist.tokens.includes(token)) {
+//       throw new AppTokenError('Token is blacklisted.');
+//     }
+//   }
+  
+
+
+
+//   export async function generateTokens(user: any) {
+//     const accessToken = await generateAccessToken(user);
+//     const refreshToken = await generateRefreshToken(user);
+//     return { accessToken, refreshToken };
+//   }
 
   export async function generateRandomUsername(): Promise<string> {
     const healthAdjectives = [
@@ -154,7 +154,7 @@ export async function verifyAccessToken(token: string) {
     return username;
   }
   
-//   // Example usage:
-//   const randomUsername = generateRandomUsername();
-//   console.log(`Random Username: ${randomUsername}`);
+// //   // Example usage:
+// //   const randomUsername = generateRandomUsername();
+// //   console.log(`Random Username: ${randomUsername}`);
   

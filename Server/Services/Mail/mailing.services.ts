@@ -1,6 +1,11 @@
 
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv'
+dotenv.config()
 
+console.log(process.env.EMAIL_APP as string)
+console.log(process.env.EMAIL_APP_USERNAME as string)
+console.log(process.env.EMAIL_APP_PASSWORD as string)
 // Create a Nodemailer transporter
 const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_APP, // Use your email service provider
@@ -23,7 +28,7 @@ const transporter = nodemailer.createTransport({
       await transporter.sendMail(mailOptions)
       return res.status(200).json({ message: "Email Sent Successfuly", success: true})
     } catch (error) {
-      return res.status(500).json({message: error.message})
+      return res.status(500).json({message: "Email Not Sent", success: false, error})
     }
   }
   
@@ -43,3 +48,19 @@ export async function sendMailToUser (email: string, title: string, content: str
     }
 }
 
+
+// Function to send an email
+
+export async function sendMailToUserForSuccessfulregistration (email: string, otp: string) {
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL_APP_USERNAME,
+      to: email,
+      subject: 'Welcome To Health-ISH',
+      html: `<h1>Welcome To Health-ISH</h1><br><p>Your OTP is ${otp}</p>`
+    })
+    return true
+  } catch (error) {
+    return false
+  }
+}

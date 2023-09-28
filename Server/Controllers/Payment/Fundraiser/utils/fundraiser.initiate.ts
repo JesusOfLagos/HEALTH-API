@@ -9,14 +9,14 @@ export async function CreateFundraiser (req: any, res: any) {
     try {
         const userId = req.user
         const { name, description } = req.body
-        const fundraiser = await Fundraiser.create({
+        const fundraiser: any = await Fundraiser.create({
             user: userId,
             name,
             description
         })
         await fundraiser.save()
         sendCreateFundraiserMail(fundraiser.user.email)
-        return res.status(200).json({ message: 'Fundraiser created successfully', Fundraiser })
+        return res.status(200).json({ message: 'Fundraiser created successfully', fundraiser })
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -26,8 +26,8 @@ export async function CreateFundraiser (req: any, res: any) {
 export async function GetAllFundraiserForAUser (req: any, res: any) {
     try {
         const userId = req.user
-        const Fundraiser = await Fundraiser.find({ user: userId })
-        return res.status(200).json({ message: 'Fundraiser fetched successfully', Fundraiser })
+        const fundraiser = await Fundraiser.find({ user: userId })
+        return res.status(200).json({ message: 'Fundraiser fetched successfully', fundraiser })
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -37,8 +37,8 @@ export async function GetAllFundraiserForAUser (req: any, res: any) {
 export async function GetFundraiserById (req: any, res: any) {
     try {
         const FundraiserId = req.params.savingId
-        const Fundraiser = await Fundraiser.findById(FundraiserId)
-        return res.status(200).json({ message: 'Fundraiser fetched successfully', Fundraiser })
+        const fundraiser = await Fundraiser.findById(FundraiserId)
+        return res.status(200).json({ message: 'Fundraiser fetched successfully', fundraiser })
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -48,13 +48,13 @@ export async function UpdateFundraiserById (req: any, res: any) {
     try {
         const FundraiserId = req.params.savingId
         const { name, description } = req.body
-        const Fundraiser = await Fundraiser.findById(FundraiserId)
-        if (!Fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
-        Fundraiser.name = name
-        Fundraiser.description = description
-        await Fundraiser.save()
-        sendUpdateFundraiserMail(Fundraiser.user.email)
-        return res.status(200).json({ message: 'Fundraiser updated successfully', Fundraiser })
+        const fundraiser: any = await Fundraiser.findById(FundraiserId)
+        if (!fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
+        fundraiser.name = name
+        fundraiser.description = description
+        await fundraiser.save()
+        sendUpdateFundraiserMail(fundraiser.user.email)
+        return res.status(200).json({ message: 'Fundraiser updated successfully', fundraiser })
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -63,11 +63,11 @@ export async function UpdateFundraiserById (req: any, res: any) {
 export async function DeleteFundraiserById (req: any, res: any) {
     try {
         const FundraiserId = req.params.savingId
-        const Fundraiser = await Fundraiser.findById(FundraiserId)
-        if (!Fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
-        if (Fundraiser.balance > 0) return res.status(400).json({ message: 'Fundraiser balance must be zero before deleting' })
-        await Fundraiser.remove()
-        sendDeleteFundraiserMail(Fundraiser.user.email)
+        const fundraiser: any = await Fundraiser.findById(FundraiserId)
+        if (!fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
+        if (fundraiser.balance > 0) return res.status(400).json({ message: 'Fundraiser balance must be zero before deleting' })
+        await fundraiser.remove()
+        sendDeleteFundraiserMail(fundraiser.user.email)
     } catch (error) {
         
     }
@@ -76,12 +76,12 @@ export async function DeleteFundraiserById (req: any, res: any) {
 export async function DeactivateFundraiserById (req: any, res: any) {
     try {
         const FundraiserId = req.params.savingId
-        const Fundraiser = await Fundraiser.findById(FundraiserId)
-        if (!Fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
-        Fundraiser.status = 'inactive'
-        await Fundraiser.save()
-        sendDeactivateFundraiserMail(Fundraiser.user.email)
-        return res.status(200).json({ message: 'Fundraiser deactivated successfully', Fundraiser })
+        const fundraiser: any = await Fundraiser.findById(FundraiserId)
+        if (!fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
+        fundraiser.status = 'inactive'
+        await fundraiser.save()
+        sendDeactivateFundraiserMail(fundraiser.user.email)
+        return res.status(200).json({ message: 'Fundraiser deactivated successfully', fundraiser })
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -91,12 +91,12 @@ export async function DeactivateFundraiserById (req: any, res: any) {
 export async function ActivateFundraiserById (req: any, res: any) {
     try {
         const FundraiserId = req.params.savingId
-        const Fundraiser = await Fundraiser.findById(FundraiserId)
-        if (!Fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
-        Fundraiser.status = 'active'
-        await Fundraiser.save()
-        await sendActivateFundraiserMail(Fundraiser.user.email)
-        return res.status(200).json({ message: 'Fundraiser activated successfully', Fundraiser })
+        const fundraiser: any = await Fundraiser.findById(FundraiserId)
+        if (!fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
+        fundraiser.status = 'active'
+        await fundraiser.save()
+        await sendActivateFundraiserMail(fundraiser.user.email)
+        return res.status(200).json({ message: 'Fundraiser activated successfully', fundraiser })
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -113,15 +113,15 @@ export async function DepositToFundraiser (req: any, res: any) {
         const accountBalance = user?.wallet.balance
         if (!user) return res.status(404).json({ message: 'User not found' })
         if (accountBalance < amount) return res.status(400).json({ message: 'Insufficient funds' })
-        const Fundraiser = await Fundraiser.findById(FundraiserId)
-        if (!Fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
+        const fundraiser: any = await Fundraiser.findById(FundraiserId)
+        if (!fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
         user.wallet.balance -= amount
-        Fundraiser.balance += amount
-        await Fundraiser.save()
+        fundraiser.balance += amount
+        await fundraiser.save()
         await user.wallet.save()
         await createFundraiserTransactionInstance(userId, 'Deposit', FundraiserId, amount)
-        sendDepositToFundraiserMail(Fundraiser.user.email, amount)
-        return res.status(200).json({ message: 'Fundraiser deposited successfully', Fundraiser })
+        sendDepositToFundraiserMail(fundraiser.user.email, amount)
+        return res.status(200).json({ message: 'Fundraiser deposited successfully', fundraiser })
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -133,18 +133,18 @@ export async function WithdrawFromFundraiser (req: any, res: any) {
         if (amount <= 0) return res.status(400).json({ message: 'Amount must be greater than zero' })
         const userId = req.user
         const FundraiserId = req.params.savingId
-        const Fundraiser = await Fundraiser.findById(FundraiserId)
+        const fundraiser: any = await Fundraiser.findById(FundraiserId)
         const user = await User.findById(userId).select('-password').populate('wallet').exec()
         if (!user) return res.status(404).json({ message: 'User not found' })
-        if (!Fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
-        if (Fundraiser.balance < amount) return res.status(400).json({ message: 'Insufficient funds' })
-        Fundraiser.balance -= amount
+        if (!fundraiser) return res.status(404).json({ message: 'Fundraiser not found' })
+        if (fundraiser.balance < amount) return res.status(400).json({ message: 'Insufficient funds' })
+        fundraiser.balance -= amount
         user.wallet.balance += amount
-        await Fundraiser.save()
+        await fundraiser.save()
         await user.wallet.save()
         await createFundraiserTransactionInstance(userId, 'Withdrawal', FundraiserId, amount)
-        sendWithdrawFromFundraiserMail(Fundraiser.user.email, amount)
-        return res.status(200).json({ message: 'Fundraiser withdrawn successfully', Fundraiser })
+        sendWithdrawFromFundraiserMail(fundraiser.user.email, amount)
+        return res.status(200).json({ message: 'Fundraiser withdrawn successfully', fundraiser })
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }

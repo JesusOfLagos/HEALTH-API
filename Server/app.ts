@@ -1,13 +1,12 @@
 
-import { Request, Response } from "express";
-import { Application } from "express";
-import express, { json } from "express";
+// Importing Modules
+import express, { Application, json } from "express";
 import mongoose, { ConnectOptions } from "mongoose";
-import cors from "cors";
+import * as cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
-import path from "path";
 import GlobalRouter from "./Routes/index.route";
+import UserRouter from "./Routes/User/user.route";
 dotenv.config();
 
 // app
@@ -17,10 +16,10 @@ const app: Application = express();
 app.use(morgan('combined')); // Use Morgan for logging
 app.use(json());
 app.use(cors({ origin: true, credentials: true }));
-app.use(express.static(path.join(__dirname, '../public')))
 app.use('/api/v1', GlobalRouter)
+app.use('/api/v1/users', UserRouter)
 app.use((req: any, res: any) => {
-    res.status(404).json({ message: 'Request is not here' });
+    res.status(404).json({ message: 'You arrived at Healthish, But with the wrong request!😒' });
 });
 
 //
