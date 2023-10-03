@@ -5,6 +5,6 @@ interface IMongooseError {
 export class MongooseError extends Error {
     constructor(message) {
         super(message);
-        this.name = 'MongooseError';
+        this.name = 'Mongoose Error';
     }
 }

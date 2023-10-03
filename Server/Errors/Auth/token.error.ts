@@ -6,8 +6,10 @@ interface ITokensError {
 export class AppTokenError extends Error {
     constructor(message) {
         super(message);
-        this.name = 'TokenError';
+        this.name = 'Token Error';
     }
 }
+
+
 
 

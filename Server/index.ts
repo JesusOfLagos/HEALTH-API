@@ -24,7 +24,7 @@ app.use((req: any, res: any) => {
 const port = process.env.PORT || 8090
 console.log(process.env.MONGO_URI as string)
 
-async function connectDB() {
+async function connectDB(): Promise<void> {
     try {
         const conn = await mongoose.connect(process.env.MONGO_URI as string, {
             useNewUrlParser: true,

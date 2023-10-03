@@ -4,16 +4,11 @@ interface IInAppTransactionsError {
 
 
 
-class InAppTransactionsError extends Error {
+export class InAppTransactionsError extends Error {
     constructor(message) {
         super(message);
-        this.name = 'InAppTransactionsError';
+        this.name = 'In-App Transaction Error';
     }
 }
 
-module.exports = InAppTransactionsError;
 
-//usage
-
-
-// throw new InAppTransactionsError('Error while processing in-app transactions');

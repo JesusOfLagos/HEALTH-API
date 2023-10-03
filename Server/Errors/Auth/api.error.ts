@@ -6,7 +6,7 @@ interface IApiError {
 class ApiError extends Error {
     constructor(message) {
         super(message);
-        this.name = 'ApiError';
+        this.name = 'API Error';
     }
 }
 
@@ -17,6 +17,18 @@ interface IForbiddenError extends Error {
 class ForbiddenError extends Error {
     constructor(message) {
         super(message);
-        this.name = 'ForbiddenError';
+        this.name = 'Forbidden Error';
     }
 }
+
+interface IUnauthorizedError extends Error {
+    message: string
+}
+
+class UnauthorizedError extends Error {
+    constructor(message) {
+        super(message)
+        this.name = "Unauthorized Error."
+    }
+}
+
