@@ -1,5 +1,6 @@
 import axios from "axios";
 import { AxiosRequestConfig } from 'axios';
+import PaymentDetail from "../models/payment.model";
 
 
 
@@ -10,7 +11,7 @@ import { AxiosRequestConfig } from 'axios';
 
 export async function sendMoneyVia(req: any, res: any) {
   try {
-      const {accountNumber, bankCode, reason, amount} : any = req.body
+      const {accountNumber, bankCode, reason, amount, hospital} : any = req.body
       const options = {
           method: 'POST',
           url: process.env.BASE_URL + 'v1/transfers',
@@ -44,6 +45,17 @@ export async function sendMoneyVia(req: any, res: any) {
     
         // Check if the response status code indicates success (2xx)
         if (response.status >= 200 && response.status < 300) {
+          const payment = await PaymentDetail.create({
+            paymentId: response.data.data.id,
+            paymentDate: response.data.data.createdAt,
+            paymentAmount: response.data.data.amount,
+            paymentMethod: response.data.data.currency,
+            paymentStatus: response.data.data.status,
+            paymentNote: response.data.data.summary,
+            user: req.user._id,
+            hospital: hospital,
+          })
+          await payment.save()
           return res.status(200).json({ message: "Transaction was successful", data })
         } else {
           return false

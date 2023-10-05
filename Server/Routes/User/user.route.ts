@@ -1,6 +1,7 @@
 import { Router } from "express";
 import User from "../../Models/User/user.model";
 import { DeleteAllUsers, GetAllUsers, CreateNewUser, LoginUser, LogoutUser } from "../../Controllers/Users/Auth/user.controller";
+import { createPaymentDetails, getAllPaymentDetails, getAllTransactions, getTransactionStatus } from "../../Services/Finance/utils/account.controller";
 
 const UserRouter = Router()
 
@@ -21,6 +22,12 @@ UserRouter.post('/register', CreateNewUser)
 UserRouter.post('/login', LoginUser)
 UserRouter.post('/logout', LogoutUser)
 
+
+// UserRouter.get('/payment-detail/get/:id', getTransactionStatus)
+
+// UserRouter.get('/payment-detail/get', getAllPaymentDetails)
+UserRouter.get('/payment-detail/get/:userId', getAllTransactions)
+UserRouter.post('/payment-detail/create', createPaymentDetails)
 
 
 

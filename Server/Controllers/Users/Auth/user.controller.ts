@@ -89,12 +89,12 @@ export async function CreateNewUser (req: Request, res: Response) {
     if (savedUser) {
       return res.status(201).json({
         message: 'User created successfully',
-        Id
+        Id, response
       });
     } else {
       // Handle the case where the user wasn't saved
       return res.status(500).json({
-        message: 'Error creating user: User not saved',
+        message: 'Error creating user: User not saved', response
       });
     }
   } catch (error) {
@@ -103,7 +103,7 @@ export async function CreateNewUser (req: Request, res: Response) {
 
     // Return an error response with a status code
     return res.status(500).json({
-      message: 'Internal server error: Customer Is Already Enrolled'
+      message: 'Internal server error', error
     });
   }
 }

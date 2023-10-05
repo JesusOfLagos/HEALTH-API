@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios'; // Import Axios and AxiosRequestConfig
 import User from '../../../Models/User/user.model';
 import { buyAirtimeWithMaplerad, getTransaction } from './account.functions';
+import PaymentDetail from '../models/payment.model';
 
 
 
@@ -123,17 +124,109 @@ export async function buyAirtime (req: any, res: any) {
 
 export async function getTransactionStatus (req: any, res: any) {
   try {
-    const { transactionId } = req.body;
-    const success = await getTransaction(transactionId)
-    console.log(success);
-    return res.status(200).json({ message: 'Transaction status fetched successfully', success });
+    const { transactionId } = req.params
+    // const success = await getTransaction(transactionId)
+    // console.log(success);
+    // return res.status(200).json({ message: 'Transaction status fetched successfully', success });
   } catch (error) {
     return res.status(500).json({ message: 'Something went wrong while fetching transaction status' , error });
     // console.log(error);
   }
 }
 
+// export async function getAllTransactions (req: any, res: any) {
+//   try {
+//     const userId = req.body.userId
+//     const payments = await PaymentDetail.find({ user: userId })
+//     if (payments) {
+//       for (let i = 0; i < payments.length; i++) {
+//         const transactionId = payments[i].paymentId
+//         const success = await getTransaction(transactionId)
+//         if (success) {
+//           console.log(success);
+//           return res.status(200).json({ message: 'Transaction status fetched successfully', success });
+//         }
+//         console.log(success);
+//         return res.status(200).json({ message: 'Transaction status fetched successfully', success });
+//       }
+//     } else if (!payments) {
+//       return res.status(404).json({ message: 'No transaction found' });
+//     }
+//   } catch (error) {
+//     return res.status(500).json({ message: 'Something went wrong while fetching transaction status' , error });
+//   }
+// }
 
+export async function getAllTransactions(req:any, res:any) {
+  try {
+    const userId = req.params.userId;
+    console.log(userId);
+    const payments = await PaymentDetail.find({ user: userId });
+    console.log(payments);
+
+    if (!payments || payments.length === 0) {
+      return res.status(404).json({ message: 'No transactions found' });
+    }
+
+    // const transactionPromises = payments.map(async (payment) => {
+      // const transactionId = payment.paymentId;
+      // const success = await getTransaction(transactionId);
+      // return { transactionId, success };
+    // });
+
+    // const transactionResults = await Promise.all(transactionPromises);
+
+    return res.status(200).json({
+      message: 'Transaction status fetched successfully',
+      // transactions: transactionResults,
+      payments
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: 'Something went wrong while fetching transaction status',
+      error,
+    });
+  }
+}
+
+export async function getAllPaymentDetails (req: any, res: any) {
+  try {
+    // const userId = req.body.userId
+    const payments = await PaymentDetail.find({})
+    if (payments) {
+      return res.status(200).json({ message: 'Payment details fetched successfully', payments });
+    } else if (!payments) {
+      return res.status(404).json({ message: 'No payment details found' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Something went wrong while fetching payment details' , error });
+  }
+}
+
+
+export async function createPaymentDetails (req: any, res: any) {
+  try {
+    const { userId, date, amount, description } = req.body;
+    const payment = new PaymentDetail({
+      user: userId,
+      amount,
+      date: date,
+      description,
+      hospital: {
+        name: 'MapleHealth',
+        bankCode: '125',
+        accountNumber: '1234567890',
+        bankName: 'UBA',
+      },
+      isPaid: false,
+    });
+    await payment.save();
+    return res.status(200).json({ message: 'Payment details created successfully', payment });
+  } catch (error) {
+    return res.status(500).json({ message: 'Something went wrong while creating payment details' , error });
+  }
+}
 
 
 export async function getAllBillers (req: any, res: any) {
